@@ -1,0 +1,5 @@
+{
+  "A": {"type": "classification", "unit": "class", "metric": "macro_f1", "features": 128, "archive_sha256": "7a992b92d92c807869c3eccf25b3bf82dcdeba9174e161d6e8b61d82c3ec8851"},
+  "B": {"type": "regression", "unit": "minutes", "metric": "rmse", "features": 34, "archive_sha256": "68db6a72c29bac11a4f86e97d9c1f524d35695464fd5f3f6d131f1431bc69d68"},
+  "C": {"type": "regression", "unit": "cycles", "metric": "rmse", "features": 24, "archive_sha256": "6cb8784e2cab7ee93453e756abf54c168721c667ca0c2c1327f5faae96e4211f"}
+}

@@ -1,0 +1,41 @@
+智训引擎 · 源码仓库与镜像对应清单（2026-11-26）
+
+image          zhixun-harness:ac-merged-cv2-final2-1126
+image_id       sha256:f76234579195f0b6b303dad6ea7faac5473898646b75ef55070bc6b9f784d42b
+archive        ABC整合-CV2-2026-11-26-final2.tar
+archive_sha256 59f935d57c1913ce1f8bf12bce27c6bfddfec26a99e8f56923be19fcf93d9236
+archive_size   132,302,336 bytes
+platform       linux/amd64, 2 CPU / 4 GiB, network none, read-only root, SDK 1.0.4
+parent_models  平台「训练起点」随包提供（A 4,326 / B 865 / C 833 参数），仓库不转发权重与任务数据
+
+构建（Linux x86-64 或 WSL2 Ubuntu，构建期不需要网络）：
+
+  docker build --platform linux/amd64 -f Dockerfile.contest-base -t zhixun-python:ubuntu24 .
+  docker build --network none --platform linux/amd64 --no-cache \
+    --build-arg PYTHON_IMAGE=zhixun-python:ubuntu24 -f Dockerfile.contest \
+    -t zhixun-harness:ac-merged-cv2-final2-1126 .
+
+自检：
+
+  docker run --rm --network=none zhixun-harness:ac-merged-cv2-final2-1126 describe    # sdk_version 1.0.4
+  python -m unittest discover -s tests -p 'test_a_*.py' -v                            # 19 passed
+  python -m unittest discover -s tests -p 'test_c_*.py' -v                            # 11 passed
+  (cd vendor/contest-harness-sdk-1.0.4 && python -m unittest discover -s tests -t . -v)  # 18 passed
+
+本地闭环（需要平台任务包提供的 checkpoint.npz 与 public/*.jsonl，放在 vendor/reference/{A,B,C}/）：
+
+  python -m scripts.check_contest_104 --mode fixture --run-id local-abc --tasks ABC --rounds 10 \
+    --image zhixun-harness:ac-merged-cv2-final2-1126
+
+本次改动：
+
+  contest_engine/c_rul.py         新增：C 工况聚类残差头（6 类工况、120 棵树、深度 6）、
+                                  ±30/15 周期限幅、0.5 收缩候选、一次小步原生续训与缓存
+  contest_submission.py           predict_target：挂载产物校验每进程一次
+                                  C 全量 23,049 行预测 105.63 s -> 4.02 s，输出逐字节相同
+  tests/test_c_merge.py           新增：C 分支与多文件状态边界 5 条
+  tests/test_c_predict_target.py  新增：预测挂载契约 6 条（软链接/越界/描述符/只校验一次）
+  docs/                           整合验收结果、C 计时证据、交接说明
+  source-sha256.json              逐文件哈希（构建前核对）
+
+超时口径：未放宽任何限制，scripts/check_contest_104.py 仍为 40 秒首行 / 100 秒全量预测。

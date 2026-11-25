@@ -1,0 +1,20 @@
+{
+  "target_trials_per_task": 3,
+  "max_attempts_per_task": 4,
+  "consecutive_no_gain": 4,
+  "total_seconds": 480,
+  "max_training_seconds": 360,
+  "reserve_fraction": 0.15,
+  "tool_timeout_seconds": 90,
+  "trainer_timeout_seconds": 5,
+  "max_trainer_calls": 12,
+  "max_trainer_tokens": 10000,
+  "trainer_tokens_per_call": 768,
+  "minimum_gain": {"A": 0.002, "B": 0.005, "C": 0.005},
+  "max_group_degradation": {"A": 0.08, "B": 0.10, "C": 0.10},
+  "min_group_support": {"A": 30, "B": 40, "C": 40},
+  "max_prediction_p95_ms": 15,
+  "max_peak_memory_mib": 2048,
+  "drift_windows": 2,
+  "drift_threshold_floor": 0.5
+}

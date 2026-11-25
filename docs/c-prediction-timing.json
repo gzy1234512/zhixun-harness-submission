@@ -1,0 +1,40 @@
+{
+  "scope": "same host, same request stream, same image base; no timeout was relaxed",
+  "local_host_timeout_seconds": 100,
+  "fix": "contest_submission.predict_target: mount descriptor validation once per process",
+  "before": {
+    "image": "zhixun-harness:ac-merged-cv2-final-1126",
+    "rows": 23049,
+    "seconds": 108.33775448799133,
+    "host_seconds": 105.62854077199881,
+    "stdout_sha256": "38899d516ab14e8d783c5b59618aff564d524eb35fb9b07fa43aa79b97bf33f4",
+    "metrics": {
+      "rmse": 47.4942687751518,
+      "mae": 33.75297974682287,
+      "nasa_score": 1548436542.8351073
+    },
+    "per_row_ms": 4.7003
+  },
+  "after": {
+    "image": "zhixun-harness:ac-merged-cv2-final2-1126",
+    "rows": 23049,
+    "seconds": 4.105212211608887,
+    "host_seconds": 4.021337756999856,
+    "stdout_sha256": "38899d516ab14e8d783c5b59618aff564d524eb35fb9b07fa43aa79b97bf33f4",
+    "metrics": {
+      "rmse": 47.4942687751518,
+      "mae": 33.75297974682287,
+      "nasa_score": 1548436542.8351073
+    },
+    "per_row_ms": 0.1781
+  },
+  "profile_600_rows": {
+    "before_stat_seconds": 1.64,
+    "before_lstat_seconds": 0.5,
+    "before_total_seconds": 2.49,
+    "before_row_ms": 4.42,
+    "mount_metadata_share": 0.8594
+  },
+  "predictions_identical": true,
+  "stdout_sha256": "38899d516ab14e8d783c5b59618aff564d524eb35fb9b07fa43aa79b97bf33f4"
+}
